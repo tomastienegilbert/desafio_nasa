@@ -1,0 +1,54 @@
+<div class="w-50 m-auto">
+  <h2>
+    👽 Bienvenido a LA NASA 👽
+  </h2>
+  <div class="row my-5 border rounded p-5">
+    <h6 class="text-center mb-5 col-12">
+      Registrese para poder pasar a evaluación
+    </h6>
+    <div class="col col-4">
+      Email:
+    </div>
+    <div class="col col-8">
+      <input type="text" class="form-control" id="email" />
+    </div>
+    <div class="col col-4">
+      Nombre:
+    </div>
+    <div class="col col-8">
+      <input type="text" class="form-control" id="nombre" />
+    </div>
+    <div class="col col-4">
+      Contraseña:
+    </div>
+    <div class="col col-8">
+      <input type="password" class="form-control" id="password" />
+    </div>
+    <div class="col-12 mt-5">
+      <button class="bg-light rounded text-success m-auto">
+        Registrarme
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+  $('button').click(async () => {
+    const email = $('#email').val()
+    const nombre = $('#nombre').val()
+    const password = $('#password').val()
+
+    const payload = { email, nombre, password }
+
+    try {
+      await axios.post('usuarios', payload)
+      alert('Usuario registrado con éxito')
+
+      window.location.href = '/login'
+    }
+    catch ({ response }) {
+      const { data } = response
+      const { error } = data 
+      alert(error)
+    }
+  })
+</script>

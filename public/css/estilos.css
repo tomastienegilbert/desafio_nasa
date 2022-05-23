@@ -1,0 +1,17 @@
+  body {
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 50px;
+  }
+
+  td,
+  th {
+    color: white;
+  }
+
+  .col {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }

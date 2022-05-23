@@ -1,0 +1,48 @@
+<h2 class="mb-2">Usuarios registrados</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Validado</th>
+    </tr>
+  </thead>
+  <tbody id="cuerpo">
+
+    {{#each usuarios}} <!-- Helper each para iterar el arreglo usuarios -->
+    <tr>    <!-- Se estaran creando filas dentro del cuerpo de la tabla -->
+      <td>{{ @index }}</td>   <!-- indice -->
+      <td>{{ this.nombre }}</td>    <!-- nombre del usuario -->
+      <td>{{ this.email }}</td>   <!-- correo -->
+
+      <!-- atributo de la autorización, se ocupa el helper "if" que evalua si el valor del atributo auth es true,
+      se va a retornar el atributo "check" del input "checkbock" que hará que se marque la casilla con un tick ✓ -->
+      <!-- A demas se ejeutara una funcion al momento de dar click una función llamada "changeStatus" que le pasa como primer argumento
+      el identificador del usuario para hacer el cambio del status, y como segundo argumento el "this" que corresponde al elemento del doom-->
+      <td><input type="checkbox" {{#if this.auth}} checked {{/if}} onclick="changeStatus({{this.id}}, this)"></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script>
+  // Lógica de la función "changeStuatus()"
+    const changeStatus = async (id , e) => {
+      const auth = e.checked
+      try{
+        await axios.put('/usuarios', {
+        id,
+        auth,
+      })
+
+      alert(auth ? 'Usuario habilitado para subir fotos' : 'Usuario deshabilitado para subir fotos')
+        
+      }
+      catch ({ response }) {
+        const { data } = response
+        const { error } = data 
+        alert(error)
+      }
+    }
+</script>

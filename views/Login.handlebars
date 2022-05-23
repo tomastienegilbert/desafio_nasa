@@ -1,0 +1,48 @@
+<div class="w-50 m-auto">
+  <h2>&#128372; Ingresar &#128372;</h2>
+
+  <div class="row my-5 border rounded p-5">
+    <div class="col col-4">Email:</div>
+    <div class="col col-8">
+      <input type="text" class="form-control" id="email" />
+    </div>
+
+    <div class="col col-4">Contraseña:</div>
+    <div class="col col-8">
+      <input type="password" class="form-control" id="password" />
+    </div>
+
+    <div class="col-12 mt-2">
+      <button onclick="verificacion()" class="bg-light m-auto btn">
+        Ingresar
+      </button>
+    </div>
+  </div>
+</div>
+
+    
+<script>
+
+  const verificacion = async () => {
+    // Se obtienen los valores con el manejo del dom mediante id
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value 
+    // preparación del payload
+    const payload = { email, password }
+
+    try {
+      // Se utiliza el metodo POST, pasandole a la ruta "/verify" el payload( correo y contraseña )
+      // esta consulta sirve para que el servidor le avise a la aplicación cliente si el usuario está autenticado y autorizado
+      const { data: token } = await axios.post('/verify', payload)
+      alert (`Autentificación y autorización exitosa!`)
+      // se envia el token firmado desde el servidor
+      window.location.href = `/Evidencias?token=${token}` 
+    }
+    catch ({ response }) {
+      const { data } = response
+      const { error } = data
+      alert(error)
+    }
+  }
+
+</script>
