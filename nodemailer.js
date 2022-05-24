@@ -12,7 +12,7 @@ let transporter = nodemailer.createTransport({
 // Función asíncrona "send()" que recibe el email y el nombre 
 const send = async (email, nombre) => {
     let mailOptions = {
-        from: 'chileinfoclub@gmail.comm',
+        from: 'chileinfoclub@gmail.com',
         to: [email],
         subject: `¡Saludos desde la NASA!`,
         html: `<h3> ¡Hola!, ${nombre} <br> La NASA te da las gracias por subir tu foto en nuestro sistema y colaborar con nuestras investigaciones </h3>`,
@@ -20,5 +20,5 @@ const send = async (email, nombre) => {
     await transporter.sendMail(mailOptions)
 };
 
-// exportar la función send
+// exportar send
 module.exports = send;
