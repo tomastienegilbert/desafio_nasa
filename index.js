@@ -1,4 +1,3 @@
-// Importar dependencias
 const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
@@ -6,29 +5,27 @@ const expressFileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const secretKey = 'Shhhh';
-const PORT = 3000;
+const chalk = require('chalk');
 
-const { nuevoUsuario, getUsuarios, setUsuarioStatus, getUsuario } = require('./consultas');
-const send = require('./correo');
+const { nuevoUsuario, getUsuarios, setUsuarioStatus, getUsuario } = require('./bbdd');
+const send = require('./nodemailer.js');
 
-// Server
-app.listen(PORT, () => console.log(`Server ON, PORT ${PORT}`));
+app.listen(3000, () => console.log(chalk.green.bold(`Servidor levantado en puerto 3000`)));
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(express.static(__dirname + '/public'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.use(
     expressFileUpload({
         limits: 5000000,
         abortOnLimit: true,
-        responseOnLimit: 'El tamaño de la imagen supera el limite permitido',
+        responseOnLimit: 'El tamaño de la imagen supera el limite permitido, cargue un archivo de mrnos de 5MB',
     })
 );
 
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.engine(
     'handlebars',
@@ -52,7 +49,7 @@ app.post('/usuarios', async (req, res) => {
         res.status(201).send(usuario);
     } catch (error) {
         res.status(500).send({
-            error: `Algo salió mal... ${error}`,
+            error: `Hubo un error ${error}`,
             code: 500,
         })
     }
@@ -181,7 +178,7 @@ app.post('/upload', (req, res) => {
             error: `Algo salió mal... ${err}`,
             code: 500,
         })
-        // Si no hay errores se ejecutará una función "send()" pasandole el email y nombre para enviarle un correo al usuario
+        // Si no hay errores se ejecutará una función "enviar()" pasandole el email y nombre para enviarle un correo al usuario
         await send(email, nombre)
         res.send('Foto cargada con éxito');
     });

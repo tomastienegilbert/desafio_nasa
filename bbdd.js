@@ -34,7 +34,7 @@ const setUsuarioStatus = async (id, auth) => {
     return usuario;
 }
 
-// Función "getUsuario" para confirmar que el usuario existe en la base de datos
+// Obtener Usuarios de la Base de datos
 const getUsuario = async (email, password) => {
     const result = await pool.query(
         `SELECT * FROM usuarios WHERE email = '${email}' AND password = '${password}'`
