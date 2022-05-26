@@ -3,12 +3,12 @@
 <h1>Bienvenido {{nombre}}</h1>  <!-- Renderización dinámica del parametro "nombre", la pasamos desde la ruta -->
 <h2>Carga una foto de un extraterrestre</h2>
 
-<!-- La inclución del correo electrónico la hacemos dentro del formulario, agregando "inputs ocultos al cliente" -->
+{{!-- 5. Dentro de Evidencias, el usuario deberá poder subir imágenes y éstas deberán ser
+almacenadas en el servidor. Al guardar con éxito una imagen se le debe mostrar al
+usuario un mensaje de agradecimiento por haber colaborado con la NASA. --}}
+
 <form action="/upload" method="POST" enctype="multipart/form-data" class="mt-4">
   <input id="foto" type="file" name="foto"  />
-  <!-- Se agregan los inputs con los atributos "name" para poder identificarlos con el "fileUpload"  -->
-  <!-- Los "values" seran la renderización dinámica de los parámetros que recubimos de la ruta -->
-  <!-- type="hiden" para mantener oculto los inputs al usuario cuando se envien los datos -->
   <input name="nombre" value="{{nombre}}" type="hidden" />
   <input name="email" value="{{email}}" type="hidden" />
 

@@ -10,25 +10,26 @@
   </thead>
   <tbody id="cuerpo">
 
-    {{#each usuarios}} <!-- Helper each para iterar el arreglo usuarios -->
-    <tr>    <!-- Se estaran creando filas dentro del cuerpo de la tabla -->
-      <td>{{ @index }}</td>   <!-- indice -->
-      <td>{{ this.nombre }}</td>    <!-- nombre del usuario -->
-      <td>{{ this.email }}</td>   <!-- correo -->
-
-      <!-- atributo de la autorización, se ocupa el helper "if" que evalua si el valor del atributo auth es true,
-      se va a retornar el atributo "check" del input "checkbock" que hará que se marque la casilla con un tick ✓ -->
-      <!-- A demas se ejeutara una funcion al momento de dar click una función llamada "changeStatus" que le pasa como primer argumento
-      el identificador del usuario para hacer el cambio del status, y como segundo argumento el "this" que corresponde al elemento del doom-->
-      <td><input type="checkbox" {{#if this.auth}} checked {{/if}} onclick="changeStatus({{this.id}}, this)"></td>
+    {{#each usuarios}} <!-- Arreglo de Usuarios -->
+      {{!-- 2. Los usuarios registrados deben ser listados en la vista Admin, en donde la columna
+      “validado” debe contener inputs de tipo checkbox que al ser clickeados cambien el
+      valor de la propiedad “auth” del usuario. --}}
+    <tr>    
+      <td>{{ @index }}</td>
+      <td>{{ this.nombre }}</td>
+      <td>{{ this.email }}</td>
+      <td><input type="checkbox" {{#if this.auth}} checked {{/if}} onclick="validacionUsuarios({{this.id}}, this)"></td>
     </tr>
     {{/each}}
   </tbody>
 </table>
 
+
 <script>
-  //función "changeStuatus()" para validar a usuarios inscritos
-    const changeStatus = async (id , e) => {
+  //*2. Los usuarios registrados deben ser listados en la vista Admin, en donde la columna
+  //“validado” debe contener inputs de tipo checkbox que al ser clickeados cambien el
+  //valor de la propiedad “auth” del usuario.
+    const validacionUsuarios = async (id , e) => {
       const auth = e.checked
       try{
         await axios.put('/usuarios', {

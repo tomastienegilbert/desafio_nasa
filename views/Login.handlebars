@@ -1,6 +1,8 @@
 <div class="w-50 m-auto">
   <h2>&#128372; Ingresar &#128372;</h2>
 
+  {{!-- La vista login debe disponibilizar un formulario para logear a los usuarios que en
+  caso de autenticarse correctamente:--}}
   <div class="row my-5 border rounded p-5">
     <div class="col col-4">Email:</div>
     <div class="col col-8">
@@ -31,8 +33,7 @@
     const payload = { email, password }
 
     try {
-      // Se utiliza el metodo POST, pasandole a la ruta "/verify" el payload( correo y contraseña )
-      // esta consulta sirve para que el servidor le avise a la aplicación cliente si el usuario está autenticado y autorizado
+     //○ Deberá recibir un mensaje de Bienvenida.
       const { data: token } = await axios.post('/verify', payload)
       alert (`Autentificación y autorización exitosa!`)
       // se envia el token firmado desde el servidor
