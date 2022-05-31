@@ -8,7 +8,7 @@ const secretKey = 'Shhhh';
 const chalk = require('chalk');
 
 const { nuevoUsuario, getUsuarios, setUsuarioStatus, getUsuario } = require('./bbdd');
-const {send} = require('./nodemailer.js');
+const { send } = require('./nodemailer.js');
 
 app.listen(3000, () => console.log(chalk.green.bold(`Servidor levantado en puerto 3000`)));
 
@@ -182,8 +182,8 @@ app.post('/upload', (req, res) => {
             error: `Algo salió mal... ${err}`,
             code: 500,
         })
-        // Si no hay errores se ejecutará una función "enviar()" pasandole el email y nombre para enviarle un correo al usuario
-        await send(email, nombre)
+        // Si no hay errores se ejecutará una función "send()" pasandole el email y nombre para enviarle un correo al usuario
+        await send(email, nombre);
         res.send('Foto cargada con éxito');
     });
 });
