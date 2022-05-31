@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 const secretKey = 'Shhhh';
 const chalk = require('chalk');
 
-const { nuevoUsuario, getUsuarios, setUsuarioStatus, getUsuario } = require('./bbdd');
-const { send } = require('./nodemailer.js');
+const { nuevoUsuario, getUsuarios, setUsuarioStatus, getUsuario } = require('./db');
+const { correoAgradecimiento, correoRegistro, } = require('./nodemailer.js');
 
 app.listen(3000, () => console.log(chalk.green.bold(`Servidor levantado en puerto 3000`)));
 
@@ -48,6 +48,7 @@ app.post('/usuarios', async (req, res) => {
     try {
         const usuario = await nuevoUsuario(email, nombre, password);
         res.status(201).send(usuario);
+        await correoRegistro(email, nombre);
     } catch (error) {
         res.status(500).send({
             error: `Hubo un error ${error}`,
@@ -183,7 +184,9 @@ app.post('/upload', (req, res) => {
             code: 500,
         })
         // Si no hay errores se ejecutará una función "send()" pasandole el email y nombre para enviarle un correo al usuario
-        await send(email, nombre);
+        await correoAgradecimiento(email, nombre);
         res.send('Foto cargada con éxito');
     });
 });
+
+//7. Enviar un correo electrónico a los usuarios cuando sean validados en la vista “Admin” notificando que ahora tienen permiso de subir imágenes al sistema.
