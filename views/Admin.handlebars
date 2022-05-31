@@ -24,7 +24,6 @@
   </tbody>
 </table>
 
-
 <script>
   //*2. Los usuarios registrados deben ser listados en la vista Admin, en donde la columna
   //“validado” debe contener inputs de tipo checkbox que al ser clickeados cambien el
@@ -36,9 +35,7 @@
         id,
         auth,
       })
-
-      alert(auth ? 'Usuario habilitado para subir fotos' : 'Usuario deshabilitado para subir fotos')
-        
+      alert(auth ? 'Usuario habilitado para subir fotos' : 'Usuario deshabilitado para subir fotos');    
       }
       catch ({ response }) {
         const { data } = response
